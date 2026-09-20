@@ -4,6 +4,6 @@ uvicorn[standard]==0.34.0
 python-multipart==0.0.20
 soundfile==0.13.1
 imageio-ffmpeg==0.6.0
-torch==2.5.1+cpu
-torchaudio==2.5.1+cpu
+torch==2.9.0+cpu
+torchaudio==2.9.0+cpu
 demucs==4.0.1
