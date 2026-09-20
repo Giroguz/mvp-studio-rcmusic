@@ -71,7 +71,14 @@ async def separate(file: UploadFile = File(...), mode: str = "stems"):
         if mode == "karaoke":
             args += ["--two-stems=vocals"]
         args += [str(source)]
-        run = subprocess.run(args, capture_output=True, text=True, timeout=60 * 45)
+        env = os.environ.copy()
+        try:
+            import imageio_ffmpeg
+            ffmpeg_bin = Path(imageio_ffmpeg.get_ffmpeg_exe())
+            env["PATH"] = f"{ffmpeg_bin.parent}{os.pathsep}{env.get('PATH', '')}"
+        except Exception:
+            pass
+        run = subprocess.run(args, capture_output=True, text=True, timeout=60 * 45, env=env)
         if run.returncode != 0:
             detail = (run.stderr or run.stdout or "No se pudo separar el audio")[-1600:]
             raise HTTPException(500, detail)
