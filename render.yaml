@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mvp-studio-rcmusic-api
+    runtime: python
+    repo: https://github.com/Giroguz/mvp-studio-rcmusic
+    branch: main
+    rootDir: backend
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
